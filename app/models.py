@@ -56,7 +56,7 @@ class Department(db.Model):
     Create a Department table
     """
 
-    __tablename__ = 'departements'
+    __tablename__ = 'departments'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
