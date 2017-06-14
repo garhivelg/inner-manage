@@ -1,0 +1,26 @@
+{
+  "name": "inner-manage",
+  "description": "Inner management system for archive",
+  "main": "run.py",
+  "authors": [
+    "Dmitry Kutsenko <d2emonium@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "management"
+  ],
+  "homepage": "https://github.com/garhivelg/inner-manage",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "components-font-awesome": "^4.7.0"
+  }
+}

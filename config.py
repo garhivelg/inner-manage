@@ -1,8 +1,13 @@
+import os
+
+
 class Config(object):
     """
     Common configuration
     """
-    pass
+    BASE_DIR = os.path.abspath(os.path.curdir)
+    TEMPLATE_FOLDER = os.path.join(BASE_DIR, "templates")
+    STATIC_FOLDER = os.path.join(BASE_DIR, "static")
 
 
 class DevelopmentConfig(Config):
@@ -11,6 +16,7 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     SQLALCHEMY_ECHO = True
+    EXPLAIN_TEMPLATE_LOADING = True
 
 
 class ProductionConfig(Config):
