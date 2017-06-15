@@ -4,6 +4,10 @@
   "description": "Inner management system for archive",
   "main": "run.py",
   "scripts": {
+    "preinstall": "git pull",
+    "install": "pip install -r requirements.txt && bower install",
+    "prestart": "flask db upgrade && gulp",
+    "start": "flask run",
     "test": "test.py"
   },
   "repository": {
