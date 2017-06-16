@@ -8,6 +8,7 @@ class Config(object):
     BASE_DIR = os.path.abspath(os.path.curdir)
     TEMPLATE_FOLDER = os.path.join(BASE_DIR, "templates")
     STATIC_FOLDER = os.path.join(BASE_DIR, "static")
+    LOGFILE = 'manage.log'
 
 
 class DevelopmentConfig(Config):

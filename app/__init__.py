@@ -1,7 +1,8 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 
 from config import app_config
@@ -18,6 +19,8 @@ def create_app(config_name):
 
     app.template_folder = app.config.get('TEMPLATE_FOLDER', '')
     app.static_folder = app.config.get('STATIC_FOLDER', '')
+
+    bootstrap = Bootstrap(app)
 
     db.init_app(app)
 
