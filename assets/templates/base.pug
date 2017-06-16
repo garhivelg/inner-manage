@@ -3,9 +3,9 @@ html
   head
     title {{title}} | Project Dream Team
     link(href="{{ url_for('static', filename='css/bootstrap.min.css') }}", rel="stylesheet")
+    link(href="{{ url_for('static', filename='css/font-awesome.min.css') }}", rel="stylesheet")
     link(href="{{ url_for('static', filename='css/style.css') }}", rel="stylesheet")
-    // link(rel="shortcut icon", href="{{ url_for('static', filename='favicon/favicon.ico') }}")
-    link(rel="icon", href="{{ url_for('static', filename='favicon/favicon.ico') }}?v=2")
+    link(rel="shortcut icon", href="{{ url_for('static', filename='favicon/favicon.ico') }}")
   body
     nav(class="navbar navbar-default navbar-fixed-top topnav", role="navigation")
       div(class="container topnav")
@@ -18,12 +18,21 @@ html
           a(class="navbar-brand topnav", href="{{ url_for('home.homepage') }}") Project Dream Team
         div(class="collapse navbar-collapse", id="bs-example-navbar-collapse-1")
           ul(class="nav navbar-nav navbar-right")
+            | {% if current_user.is_authenticated %}
+            li
+              a(href="{{ url_for('home.dashboard') }}") Dashboard
+            li
+              a(href="{{ url_for('auth.logout') }}") Logout
+            li
+              a <i class="fa fa-user"></i> Hi, {{ current_user.username }}!
+            | {% else %}
             li
               a(href="{{ url_for('home.homepage') }}") Home
             li
-              a(href="#") Register
+              a(href="{{ url_for('auth.register') }}") Register
             li
-              a(href="#") Login
+              a(href="{{ url_for('auth.login') }}") Login
+            | {% endif %}
 
     .wrapper
       block body
@@ -37,10 +46,15 @@ html
             ul.list-inline
               li
                 a(href="{{ url_for('home.homepage') }}") Home
-              li.footer-menu-divider &nbsp;
+              li.footer-menu-divider .
+              | {% if current_user.is_authenticated %}
               li
-                a(href="#") Register
-              li.footer-menu-divider &nbsp;
+                a(href="{{ url_for('auth.logout') }}") Logout
+              | {% else %}
               li
-                a(href="#") Login
+                a(href="{{ url_for('auth.register') }}") Register
+              li.footer-menu-divider .
+              li
+                a(href="{{ url_for('auth.login') }}") Login
+              | {% endif %}
             p(class="copyright text-muted small") Copyright &copy; 2017/ All Rights Reserved
