@@ -1,0 +1,10 @@
+extends ../base.pug
+
+block body
+  | {% import "bootstrap/wtf.html" as wtf %}
+  .content-section
+    .center
+      h1 Register for an account
+      br
+      | {{ wtf.quick_form(form) }}
+  
