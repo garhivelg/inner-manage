@@ -19,8 +19,19 @@ html
         div(class="collapse navbar-collapse", id="bs-example-navbar-collapse-1")
           ul(class="nav navbar-nav navbar-right")
             | {% if current_user.is_authenticated %}
+            | {% if current_user.is_admin %}
+            li
+              a(href="{{ url_for('home.admin_dashboard') }}") Dashboard
+            li
+              a(href="#") Departments
+            li
+              a(href="#") Roles
+            li
+              a(href="#") Employees
+            | {% else %}
             li
               a(href="{{ url_for('home.dashboard') }}") Dashboard
+            | {% endif %}
             li
               a(href="{{ url_for('auth.logout') }}") Logout
             li
