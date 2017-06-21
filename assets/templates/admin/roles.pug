@@ -36,7 +36,7 @@ block body
                     a(href="{{ url_for('admin.edit_role', id=role.id) }}")  <i class="fa fa-pencil"></i> Edit
                   td 
                     a(href="{{ url_for('admin.delete_role', id=role.id) }}")  <i class="fa fa-trash"></i> Delete
-                |{% endfor %}
+                | {% endfor %}
           | {% else %}
           div(style="text-align: center;")
             h3 No roles have been added.

@@ -3,9 +3,9 @@ from flask_login import current_user, login_required
 
 
 from . import admin
-from .forms import DepartmentForm, RoleForm
+from .forms import DepartmentForm, RoleForm, EmployeeAssignForm
 from .. import db
-from ..models import Department, Role
+from ..models import Department, Role, Employee
 
 
 def check_admin():
@@ -184,7 +184,7 @@ def edit_role(id):
         db.session.commit()
         flash('You have successfully edited the role.')
 
-        return redirect(url_for('admin.list_role'))
+        return redirect(url_for('admin.list_roles'))
 
     form.name.data = role.name
     form.description.data = role.description
@@ -212,3 +212,51 @@ def delete_role(id):
     flash('You have successfully deleted the role.')
 
     return redirect(url_for('admin.list_roles'))
+
+
+@admin.route('/employees', methods=['GET', 'POST'])
+@login_required
+def list_employees():
+    """
+    List all employees
+    """
+    check_admin()
+
+    employees = Employee.query.all()
+
+    return render_template(
+        'admin/employees.html',
+        employees=employees,
+        title="Employees"
+    )
+
+
+@admin.route('/employees/assign/<int:id>', methods=['GET', 'POST'])
+@login_required
+def assign_employee(id):
+    """
+    Assign a department and a roleto an  employee
+    """
+    check_admin()
+
+    employee = Employee.query.get_or_404(id)
+
+    if employee.is_admin:
+        abort(403)
+
+    form = EmployeeAssignForm()
+    if form.validate_on_submit():
+        employee.department = form.department.data
+        employee.role = form.role.data
+        db.session.add(employee)
+        db.session.commit()
+        flash('You have successfully assigned a department and role.')
+
+        return redirect(url_for('admin.list_employees'))
+
+    return render_template(
+        'admin/role.html',
+        employee=employee,
+        form=form,
+        title="Assign Employee"
+    )
