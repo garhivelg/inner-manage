@@ -58,7 +58,7 @@ def add_department():
         return redirect(url_for('admin.list_departments'))
 
     return render_template(
-        'admin/departments/department.html',
+        'admin/department.html',
         action="Add",
         add_department=add_department,
         form=form,
@@ -90,7 +90,7 @@ def edit_department(id):
     form.description.data = department.description
 
     return render_template(
-        'admin/departments/department.html',
+        'admin/department.html',
         action="Edit",
         add_department=add_department,
         form=form,

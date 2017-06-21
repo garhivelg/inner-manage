@@ -1,0 +1,16 @@
+extends ../base.pug
+
+block body
+  | {% import "bootstrap/wtf.html" as wtf %}
+  .content-section
+    .outer
+      .middle
+        .inner
+          .center
+            | {% if add_department %}
+            h1 Add department
+            | {% else %}
+            h1 Edit Department
+            | {% endif %}
+            br
+            | {{ wtf.quick_form(form) }}
