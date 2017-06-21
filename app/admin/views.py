@@ -3,9 +3,9 @@ from flask_login import current_user, login_required
 
 
 from . import admin
-from .forms import DepartmentForm
+from .forms import DepartmentForm, RoleForm
 from .. import db
-from ..models import Department
+from ..models import Department, Role
 
 
 def check_admin():
@@ -81,6 +81,7 @@ def edit_department(id):
     if form.validate_on_submit():
         department.name = form.name.data
         department.description = form.description.data
+        db.session.add(department)
         db.session.commit()
         flash('You have successfully edited the department.')
 
@@ -112,3 +113,102 @@ def delete_department(id):
     flash('You have successfully deleted the department.')
 
     return redirect(url_for('admin.list_departments'))
+
+
+@admin.route('/roles', methods=['GET', 'POST'])
+@login_required
+def list_roles():
+    """
+    List all roles
+    """
+    check_admin()
+
+    roles = Role.query.all()
+
+    return render_template(
+        'admin/roles.html',
+        roles=roles,
+        title="Roles"
+    )
+
+
+@admin.route('/roles/add', methods=['GET', 'POST'])
+@login_required
+def add_role():
+    """
+    Add a role to the database
+    """
+    check_admin()
+
+    add_role = True
+
+    form = RoleForm()
+    if form.validate_on_submit():
+        role = Role(
+            name=form.name.data,
+            description=form.description.data
+        )
+        try:
+            db.session.add(role)
+            db.session.commit()
+            flash('You have successfully added a new role.')
+        except:
+            flash('Error: role name already exists.')
+        return redirect(url_for('admin.list_roles'))
+
+    return render_template(
+        'admin/role.html',
+        action="Add",
+        add_role=add_role,
+        form=form,
+        title="Add Role"
+    )
+
+
+@admin.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_role(id):
+    """
+    Edit a role
+    """
+    check_admin()
+
+    add_role = False
+
+    role = Role.query.get_or_404(id)
+    form = RoleForm(obj=role)
+    if form.validate_on_submit():
+        role.name = form.name.data
+        role.description = form.description.data
+        db.session.add(role)
+        db.session.commit()
+        flash('You have successfully edited the role.')
+
+        return redirect(url_for('admin.list_role'))
+
+    form.name.data = role.name
+    form.description.data = role.description
+
+    return render_template(
+        'admin/role.html',
+        action="Edit",
+        add_role=add_role,
+        form=form,
+        title="Edit Role"
+    )
+
+
+@admin.route('/roles/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_role(id):
+    """
+    Delete a role from database
+    """
+    check_admin()
+
+    role = Role.query.get_or_404(id)
+    db.session.delete(role)
+    db.session.commit()
+    flash('You have successfully deleted the role.')
+
+    return redirect(url_for('admin.list_roles'))

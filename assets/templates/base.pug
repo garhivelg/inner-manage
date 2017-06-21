@@ -25,7 +25,7 @@ html
             li
               a(href="{{ url_for('admin.list_departments') }}") Departments
             li
-              a(href="#") Roles
+              a(href="{{ url_for('admin.list_roles') }}") Roles
             li
               a(href="#") Employees
             | {% else %}

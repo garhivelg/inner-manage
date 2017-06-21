@@ -8,9 +8,9 @@ block body
         .inner
           .center
             | {% if add_department %}
-            h1 Add Department
+            h1 Add Role
             | {% else %}
-            h1 Edit Department
+            h1 Edit Role
             | {% endif %}
             br
             | {{ wtf.quick_form(form) }}
